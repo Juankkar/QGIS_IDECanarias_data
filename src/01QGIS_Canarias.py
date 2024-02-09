@@ -1,51 +1,21 @@
 import os
 import geopandas as gpd
-import pandas as pd
-import zipfile
-import requests
-import fiona
-
-#################################
-##    Descarga de los datos    ##
-#################################
 
 ## ruta donde se encuentra el proyecto, incluyendo este
 ruta_de_trabajo = "C:\\Users\\jcge9\\Documents\\QGIS_IDECanarias_data\\"
 ## Cambiamos la ubicación al direcotorio "source code"
 os.chdir(f"{ruta_de_trabajo}src")
 
-metadata = pd.read_csv('..\\metadata\\metadatos_medio_ambiente_shp.csv')
-directorio_destino = '..\\data'
-
-for url in list(metadata["url"]):
-    try:
-        # Obtener el nombre del archivo de la URL
-        nombre_archivo = os.path.join(directorio_destino, os.path.basename(url))
-
-        # Descargar el archivo
-        response = requests.get(url)
-        with open(nombre_archivo, 'wb') as file:
-            file.write(response.content)
-
-        print(f"Archivo descargado: {nombre_archivo}")
-        
-        # Descomprimir el archivo
-        with zipfile.ZipFile(nombre_archivo, 'r') as zip_ref:
-            zip_ref.extractall(directorio_destino)
-            print(f"Archivos descomprimidos en: {directorio_destino}")
-
-    except Exception as e:
-        print(f"Error al descargar {url}: {e}")
-
 ########################################
 ##    Leemos los datos vectoriales    ##
 ########################################
 
 ## Capas
+islas_canarias = QgsVectorLayer(r"..\\data\\islas_generalizadas.shp","Islas Generalizadas")
 areas_protegidas = QgsVectorLayer(r"..\\data\\eennpp.shp","Areas Protegidas")
 
 ## Añadimos las capas a una lista
-lista_capas = [areas_protegidas]
+lista_capas = [islas_canarias, areas_protegidas]
 
 ## De la lista anterior descargamos las capas de vectores de los archivos SHP
 for index in range(len(lista_capas)):
