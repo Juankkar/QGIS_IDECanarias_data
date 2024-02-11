@@ -7,4 +7,4 @@ URL IDECanarias Ortofoto territorial de canarias
 
 URL IDECanarias Mapa Topográfico Integrado 1:5.000/1:1.000 Años 2018-2023
 
-* https://idecan2.grafcan.es/ServicioWMS/MTI
+* https://idecan2.grafcan.es/ServicioWMS/MTI?
