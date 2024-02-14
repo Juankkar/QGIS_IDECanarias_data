@@ -18,3 +18,11 @@ $zipFiles = Get-ChildItem -Path $downloadDirectory -Filter *.zip
 foreach ($zipFile in $zipFiles) {
     Expand-Archive -Path $zipFile.FullName -DestinationPath $downloadDirectory -Force
 }
+
+# Descomprimimos archivos RAR utilizando UnRAR.exe
+$rarFiles = Get-ChildItem -Path $downloadDirectory -Filter *.rar
+foreach ($rarFile in $rarFiles) {
+    $unrarCommand = "C:\Path\To\UnRAR.exe"  # Reemplaza con la ubicación real de UnRAR.exe
+    $arguments = "x -o+ $($rarFile.FullName) $($downloadDirectory)"
+    Start-Process -FilePath $unrarCommand -ArgumentList $arguments -Wait
+}
